@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Github users</title>
+    <style>
+      body {
+        background-color: #2A157C;
+        color: #FAF9F8;
+        font: 15px Arial, Helvetica, sans-serif;
+        line-height: 1.5em;
+        width: 100%;
+
+        margin: 0;
+        padding: 15px 25px
+
+}
+      button {
+    background-color: #F7C901;
+    color: black;
+    padding: 7px 8px;
+    display: inline-block;
+    margin-left: 15px;
+    font-size: 16px;
+    cursor: pointer;
+}
+      button:hover {
+  background-color: #1899E1;
+  color: white;}
+        
+  
+      #individual{
+        border:6px solid #FFFFFF;
+        background-color:#a3a3c2;
+        color: #666699
+        font: 20px Arial, Helvetica, sans-serif;
+        width:80%;
+        padding-left: 25px;
+        line-height: 2.00em;
+        margin:5%;
+      }
+      
+      #sub-individual{
+        float:right;
+        width:70%;
+        color: black;
+        
+        
+    }
+
+    </style>
+</head>
+<body>
+    <h1><b>Github Users:</b></h1>
+    <button id="showInfo">Show all Users</button> 
+    <br>
+    <div id="showme"></div>
+    <script>
+        document.getElementById("showInfo").addEventListener('click', onProcess);
+        function onProcess(){
+            var req = new XMLHttpRequest();
+            req.open('GET', 'https://api.github.com/users', true);
+            req.onload = function() {
+                if(req.status==200){
+                  var people = JSON.parse(req.responseText)
+                  var output= '';
+                  for(var i in people){
+                   output +=
+                          '<div id="individual">' +
+                          '<img src="'+people[i].avatar_url+'" width="15%">'+
+                          '<div id="sub-individual"><ul>' +
+                          '<p><li>ID: <span id="class-one">'+people[i].id+'<span></li></p>' +
+                          '<p><li>Login: <span id="class-one">'+people[i].login+'<span></li></p>' +
+                          '</ul> </div>' +
+                          '</div>';
+                   document.getElementById('showme').innerHTML = output;
+                   }
+                }         }
+            req.send();
+        }
+    </script>
+  </body>
+</html>
